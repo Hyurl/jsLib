@@ -16,14 +16,18 @@
 				var url=$(this).attr('action');
 				var method=$(this).attr('method');
 				var a=$.trim(param).split(',');
-				var b=$(this).find('input[name="'+$.trim(a[0])+'"]').length;
+				var b=$(this).find('[name="'+$.trim(a[0])+'"]').length;
 				var c=a.length;
 				var d='';
 				var e=0;
+				var f='';
 				for(var i=0;i<b;i++){
 					for(var j=0;j<c;j++){
-						d+=$.trim(a[j])+'='+$(this).find('input[name="'+$.trim(a[j])+'"]').eq(i).val()+'&';
+						f=$(this).find('[name="'+$.trim(a[j])+'"]').eq(i).val();
+						f=f.replace(/&/ig,'%26');
+						d+=$.trim(a[j])+'='+f+'&';
 					}
+					alert(d);
 					$.ajax({
 						type: method,
 						url: url,
