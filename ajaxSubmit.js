@@ -7,7 +7,7 @@
 			callback: 回调函数, 当表单成功提交时执行的函数(可选, 带有返回值);
 			bool: 布尔值 true 或 false, 设置是否成功提交每组数据后都执行回调函数, true 为每次执行, false 或不设置为所有数据提交后执行一次回调函数。
 			当存在回调函数时, 如果不验证表单, 请将 callfore 设置为 null。
-			提交多组数据时需要为每组数据使用 <fieldset> 标签并赋予一个 class 值为 single-data, 不需要修改后台代码(当 bool 不设置或者设置为 false 时, 为了方便获得提交结果, 应将后台验证的返回值设置为 0 或 1)。
+			提交多组数据时需要为每组数据使用 <fieldset> 标签并赋予一个 class 值为 group-data, 不需要修改后台代码(当 bool 不设置或者设置为 false 时, 为了方便获得提交结果, 应将后台验证的返回值设置为 0 或 1)。
 		*/
 		ajaxSubmit: function(callfore, callback, bool){
 			$(this).submit(function(event){
@@ -15,9 +15,9 @@
 				if(callfore!=undefined && $.isFunction(callfore) && callfore()==false) return false;
 				var action=$(this).attr('action');
 				var method=$(this).attr('method');
-				if($(this).find('fieldset.single-data').length>0){
+				if($(this).find('fieldset.group-data').length>0){
 					var data='', e=0;
-					$(this).find('fieldset.single-data').each(function(){
+					$(this).find('fieldset.group-data').each(function(){
 						data=$(this).children().serialize();
 						$.ajax({
 							url: action,
