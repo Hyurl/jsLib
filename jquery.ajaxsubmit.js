@@ -31,22 +31,23 @@
 			options.data = $(this).serialize().replace(/\+/g, '%20');
 			var successCallable = typeof options.success == 'function',
 				beforeSendCallable = typeof options.beforeSend == 'function',
-				length = $this.find(options.setSelector).length;
+				length = $this.find(options.setSelector).length,
+				success = options.success;
 			if(beforeSendCallable && (options.once || !length)){
 				var result = options.beforeSend.call($this, options);
-					if(!result || typeof result != 'object') return false;
-					options = $.extend(options, result);
+					if(result === false) return false;
+					if(typeof result == 'object') options = $.extend(options, result);
 			}
 			if(options.setSelector && length){
 				var i = t = 0,
-					success = function(result){
+					_success = function(result){
 					if(isNaN(result)){
 						t = result;
 					}else{
 						t += parseInt(result);
 					}
 					if(successCallable){
-						if(!options.once || i == length-1) options.success.call($this, t);
+						if(!options.once || i == length-1) success.call($this, t);
 					}
 					i++;
 				};
@@ -54,16 +55,16 @@
 					options.data = $(this).children().serialize().replace(/\+/g, '%20');
 					if(beforeSendCallable && !options.once){
 						var result = options.beforeSend.call($this, options);
-						if(!result || typeof result != 'object') return false;
-						options = $.extend(options, result);
+						if(result === false) return false;
+						if(typeof result == 'object') options = $.extend(options, result);
 					}
-					options.success = function(result){ return success(result); };
+					options.success = function(result){ return _success(result); };
 					delete options.beforeSend;
 					$.ajax(options);
 				});
 			}else{
 				options.success = function(result){
-					if(successCallable) options.success.call($this, result);
+					if(successCallable) success.call($this, result);
 				};
 				delete options.beforeSend;
 				$.ajax(options);
