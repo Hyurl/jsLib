@@ -54,14 +54,14 @@
 					i++;
 				};
 				$this.find(arg.setSelector).each(function(){
-					options.data = $(this).children().serialize();
+					options.data = $(this).children().serialize().replace(/\+/g, '%20');
 					if(beforeSendCallable && !arg.once && arg.beforeSend.call($this, options) === false){
 						return false;
 					}
 					$.ajax(options);
 				});
 			}else{
-				options.data = $this.serialize();
+				options.data = $this.serialize().replace(/\+/g, '%20');
 				if(beforeSendCallable && arg.beforeSend.call($this, options) === false){
 					return false;
 				}
