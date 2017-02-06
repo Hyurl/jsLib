@@ -28,6 +28,7 @@
 			event.preventDefault();
 			options.url = $this.attr('action') || options.url;
 			options.type = $this.attr('method') || options.type;
+			options.data = $(this).serialize().replace(/\+/g, '%20');
 			var successCallable = typeof options.success == 'function',
 				beforeSendCallable = typeof options.beforeSend == 'function',
 				length = $this.find(options.setSelector).length;
