@@ -156,6 +156,26 @@ String.prototype.ucfirst = function(){
 }
 
 /**
+ * getBaseName() 获取不含路径的文件名
+ * @return {String} 文件名
+ */
+String.prototype.getBaseName = function(){
+	var index = this.lastIndexOf('/');
+	return this.substring(index >= 0 ? index+1 : 0, this.length);
+}
+
+/**
+ * getExt() 获取文件后缀名
+ * @return {String} 后缀名
+ */
+String.prototype.getExt = function(){
+	var baseName = this.getBaseName(),
+		index = baseName.lastIndexOf('.');
+	if(index == -1) return '';
+	return baseName.substring(index+1, baseName.length);
+}
+
+/**
  * version_compare() 比较版本号
  * @param  {string} ver1 版本号1
  * @param  {string} ver2 版本号2
