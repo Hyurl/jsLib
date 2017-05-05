@@ -2,7 +2,7 @@
  这个 js 插件包含了有关客户端操作和响应事件的函数和方法
  */
 
-var Agent = {
+Agent = {
 	/* fullScreen(exit) 方法使浏览器进入或退出全屏状态 */
 	fullScreen: function(exit){
 		if(exit == undefined){
@@ -23,7 +23,7 @@ var Agent = {
 			} else if (de.webkitCancelFullScreen) {
 				de.webkitCancelFullScreen();
 			}
-		}	
+		}   
 	},
 
 	/* 
@@ -46,5 +46,5 @@ var Agent = {
 				return navigator.userAgent.match(/IEMobile/i);
 			break;
 		}
-	};
-}
+	}
+};

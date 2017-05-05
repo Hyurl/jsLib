@@ -11,11 +11,12 @@
 	 * @return {string|object} 如果设置了 name，则返回对应的值，不存在则返回 null，否则返回所有数据构成的对象
 	 */
 	cookie = function (key, value, options){
+		var Cookie = function(){};
 		options = Object.assign({}, options);
 		if(!value && value !== undefined){
 			options.expires = -1;
 		}
-		var cookie = {length: 0},
+		var cookie = Object.create(Cookie.prototype, {length: {value: 0, writable: true}}),
 			_cookie = document.cookie.split('; ');
 		for(var i in _cookie){
 			var kv = _cookie[i].split('=');
@@ -29,11 +30,11 @@
 		if(typeof options.expires === 'number'){
 			var time = options.expires,
 				t = options.expires = new Date();
-			t.setDate(t.getDate()+time);
+			t.setTime(t.getTime()+time);
 		}
 		document.cookie = [
 			key+'='+encodeURIComponent(String(value)),
-			options.expires ? '; expires='+options.expires.toUTCString() : '',
+			options.expires ? '; expires='+options.expires.toString() : '',
 			options.path ? '; path='+options.path : '',
 			options.domain ? '; domain='+options.domain : '',
 			options.secure ? '; secure' : ''

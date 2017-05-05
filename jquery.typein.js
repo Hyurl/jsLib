@@ -1,26 +1,49 @@
-/* $(selector).typeIn(placeholder,speed,callback) 用于将制定元素的内容显示为打印出现的动画效果。
-	element: 绑定事件的元素(必须);
-	placeholder: 打印文字效果出现时的替代光标(必须);
-	speed: 打印每个字的速度, 支持 "slow", "fast", "normal", 毫秒, 以及不定义(可选);
-	callback: 打印效果完成后的回调函数*(可选)。
-	注意：使用时将绑定元素的 display 值设置为 none。
-*/
-$.fn.typeIn: function(placeholder,speed,callback){
-	$(this).show();
-	var d=$(this), c=d.html(), b=0, s; d.html("");
-	if(speed!=undefined && !$.isFunction(speed)){
-		switch(speed){ case "slow": s=120; break; case "normal": s=75; break; case "fast": s=35; break; default: s=speed; break; }
-	}else{ s=75; }
-	$(this).each(function(){
-		var e=setInterval(function(){
-			var f=c.substr(b, 1);
-			if(f=="<"){ b=c.indexOf(">", b) + 1;
-			}else{ b++; }
-			d.html(c.substring(0, b) + (b & 1 ? placeholder : ""));
-			if(b>=c.length){
-				clearInterval(e);
-				if(callback!=undefined && $.isFunction(callback)) callback();
-			}
-		}, s);
-	});
-});
+(function($){
+	/**
+	 * $(selector).typeIn() 方法用来将 html 文本逐字打印显示出来
+	 * @param  string|int       speed       打印速度，可以设置为字符串 'slow', 'normal', 'fast', 或者数值
+	 * @param  string|function  placeholder 占位符, 如果设置为回调函数，则使用默认值 '_'
+	 * @param  function         callback    回调函数
+	 * @return this
+	 */
+	$.fn.typeIn = function(speed, placeholder, callback){
+		speed = speed || 100;
+		switch(speed){
+			case "slow":
+				speed = 150;
+				break;
+			case "normal":
+				speed = 100;
+				break;
+			case "fast":
+				speed = 50;
+				break;
+		}
+		placeholder = placeholder || '_';
+		if(typeof placeholder == 'function'){
+			callback = placeholder;
+			placeholder = '_';
+		}
+		var $this = $(this),
+			html = $this.html(),
+			i = 0;
+		$(this).html('');
+		$(this).each(function(){
+			var int = setInterval(function(){
+				if(html.substr(i, 1) == '<'){
+					i = html.indexOf('>', i) + 1;
+				}else{
+					i++;
+				}
+				$this.html(html.substring(0, i) + (i & 1 ? placeholder : ''));
+				if(i >= html.length){
+					clearInterval(int);
+					if(typeof callback == 'function'){
+						callback.call($this, $this);
+					}
+				}
+			}, speed);
+		});
+		return this;
+	}
+})($);

@@ -65,7 +65,7 @@
 				options.data[this.name] = this.value;
 			});
 			if(beforeSendCallable && (options.once || !setLength)){
-				var result = options.beforeSend.call($this, options),
+				var result = beforeSend.call($this, options),
 					_options = $.extend({}, options);
 				if(result === false) return false;
 				if(typeof result == 'object') options = $.extend(options, result);
@@ -89,7 +89,7 @@
 						options.data[this.name] = this.value;
 					});
 					if(beforeSendCallable && !options.once){
-						var result = options.beforeSend.call($this, options);
+						var result = beforeSend.call($this, options);
 						if(result === false) return false;
 						if(typeof result == 'object') options = $.extend(options, result);
 					}
