@@ -7,6 +7,8 @@ $.fn.pin = function(options){
 	defaults = {
 		minWidth: 460, //支持的最小屏幕宽度
 		top: 0, //顶端偏移高度
+		start: null, //浮动开始时执行的回调函数
+		end: null, //浮动关闭后执行的回调函数
 	};
 	options = $.extend(defaults, options);
 	var $this = $(this);
@@ -22,12 +24,18 @@ $.fn.pin = function(options){
 					'top': options.top,
 				}
 				$this.css(css);
+				if(typeof options.start == 'function'){
+					options.start.call($this);
+				}
 			}else{
 				css = {
 					'position': position,
 					'top': _top,
 				}
 				$this.css(css);
+				if(typeof options.end == 'function'){
+					options.end.call($this);
+				}
 			}
 		}
 	});
