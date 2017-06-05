@@ -1,7 +1,3 @@
-log = function(text){
-	console.log(text);
-}
-
 /* 去掉字符串首尾空格的方法 */
 String.prototype.ltrim = function() {
 	return this.replace(/(^\s*)/g, "");  
@@ -195,4 +191,13 @@ function version_compare(ver1, ver2){
 		if(parseInt(ver2[i]) > 0) return -1;
 	}
 	return 0;
+}
+
+/**
+ * heredoc() 文本
+ * @param  {Function} fn 匿名函数
+ * @return {String}      文本内容
+ */
+function heredoc(fn){
+	return fn.toString().split('\n').slice(1,-1).join('\n') + '\n'
 }
