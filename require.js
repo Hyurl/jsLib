@@ -37,7 +37,7 @@ function require(url, options, callback){
 			callback.call(ele);
 		});
 		ele.addEventListener("error", function(){
-			console.error('Uncaught DOMException: Fail to load request resource "'+url+'". The URL is invalid.');
+			console.error('Uncaught DOMException: Fail to load resource "'+url+'". The URL is invalid.');
 			ele.parentNode.removeChild(ele);
 		});
 	}else{ //IE8
