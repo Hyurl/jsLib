@@ -32,11 +32,27 @@ function require(url, options, callback){
 	if(_options.defer) ele.defer = "defer";
 	if(_options.charset) ele.charset = _options.cahrset;
 	if(_options.innerText) ele.innerText = options.innerText;
-	ele.addEventListener("load", function(){
-		callback.call(ele);
-	});
-	ele.addEventListener("error", function(){
-		throw 'DOMException: Fail to load request resource "'+url+'". The URL is invalid.';
-	});
-	document.currentScript.parentNode.appendChild(ele);
+	if(ele.addEventListener){
+		ele.addEventListener("load", function(){
+			callback.call(ele);
+		});
+		ele.addEventListener("error", function(){
+			console.error('Uncaught DOMException: Fail to load request resource "'+url+'". The URL is invalid.');
+			ele.parentNode.removeChild(ele);
+		});
+	}else{ //IE8
+		// console.error("Uncaught DOMException: Your browser doesn't support dynamic loading.");
+		ele.onreadystatechange = function(){
+			if(this.readyState == 'complete' || this.readyState == 'loaded'){
+				callback.call(ele);
+			}
+		}
+	}
+	if(document.currentScript){
+		document.currentScript.parentNode.appendChild(ele);
+	}else{ //IE
+		var scripts = document.getElementsByTagName('script');
+		var lastScript = scripts[scripts.length - 1];
+		lastScript.parentNode.appendChild(ele);
+	}
 };
