@@ -14,7 +14,7 @@ $.fn.scrollSpy = function(options){
 	options = $.extend(defaults, options);
 	var targets = $(this).filter(function(){
 		var href = $(this).attr(options.attr);
-		return href.indexOf('#') === 0 && $(href).length > 0;
+		return href && href.indexOf('#') === 0 && $(href).length > 0;
 	});
 	$(window).scroll(function(){
 		var scrollTop = $(this).scrollTop();
@@ -22,7 +22,7 @@ $.fn.scrollSpy = function(options){
 			var $this = $(this),
 				top = $this.offset().top;
 			if(scrollTop >= top - options.top){
-				var href = $this.attr(options.href);
+				var href = $this.attr(options.attr);
 				$(href).addClass(options.class).siblings().removeClass(options.class);
 				if(typeof options.callback == 'function'){
 					options.callback.call($this);
