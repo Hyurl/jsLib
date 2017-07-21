@@ -22,8 +22,8 @@ $.fn.scrollSpy = function(options){
 			var $this = $(this),
 				top = $this.offset().top;
 			if(scrollTop >= top - options.top){
-				var href = $this.attr(options.href);
-				$(href).addClass(options.class).siblings().removeClass(options.class);
+				// var href = $this.attr(options.attr);
+				// $(href).addClass(options.class).siblings().removeClass(options.class);
 				if(typeof options.callback == 'function'){
 					options.callback.call($this);
 				}
