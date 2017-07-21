@@ -1,7 +1,7 @@
 /**
  * $(selector).pin() 将元素固定到浏览器顶端
- * @param  {[type]} options [description]
- * @return {[type]}         [description]
+ * @param  {Object} options 选项参数
+ * @return {Object} this    当前对象
  */
 $.fn.pin = function(options){
 	defaults = {
@@ -39,4 +39,5 @@ $.fn.pin = function(options){
 			}
 		}
 	});
+	return this;
 }

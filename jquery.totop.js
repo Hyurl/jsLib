@@ -1,3 +1,9 @@
+/**
+ * $(selector).toTop() 在页面中显示一个返回顶部按钮 
+ * @param  {[type]}   options  [description]
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
 $.fn.toTop = function(options, callback){
 	var defaults = {
 			id: 'back-to-top',
@@ -29,4 +35,5 @@ $.fn.toTop = function(options, callback){
 			if(typeof callback == 'function') callback.call($this);
 		});
 	});
+	return this;
 }
