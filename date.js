@@ -30,9 +30,9 @@ function date(format, timestamp){
 		hour        = _Date.getHours() >= 10 ? _Date.getHours() : '0' + _Date.getHours(), //  时;
 		minute      = _Date.getMinutes() >= 10 ? _Date.getMinutes() : '0' + _Date.getMinutes(), // 分;
 		second      = _Date.getSeconds() >= 10 ? _Date.getSeconds() : '0' + _Date.getSeconds(), // 秒;
-		millisecond = _Date.getMilliseconds(); // 毫秒
+		millisecond = _Date.getMilliseconds(), // 毫秒
 		weekday     = [['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], ['Sun.','Mon.','Tues.','Wed.','Thur.','Fri.','Sat.'], ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']], // 星期;
-		apm         = hour <= 12 ? ['AM','am'] : ['PM','pm']; // 英文上下午
+		apm         = hour <= 12 ? ['AM','am'] : ['PM','pm'], // 英文上下午
 		apm_cn      = ['凌晨', '早上', '上午', '中午', '下午', '晚上']; // 中文上下午
 	if(typeof(format) != 'string') return false;
 	format = format.replace(/\bY\b/g, year[0]) // 替换至4位数年份
