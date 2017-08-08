@@ -66,3 +66,80 @@ function date(format, timestamp){
 	}
 	return format;
 }
+
+/**
+ * refresh() 会自动刷新的时间显示
+ * @param  {String}   format   时间显示格式，请参考 date() 函数
+ * @param  {Function} callback 每一次刷新时执行的回调函数，支持一个参数，即当前
+ *                             的时间文本；如果回调函数返回 false，则将其停止；
+ * @param  {Number}   msec     刷新的时间间隔，默认 1000 毫秒
+ */
+date.refresh = function(format, callback, msec = 1000, times = 0){
+	var refresh = function(){
+		if(typeof callback == 'function')
+			var result = callback(date(format));
+		if(result === false)
+			clearInterval(int);
+	};
+	refresh();
+	var int = setInterval(refresh, msec);
+}
+
+/**
+ * countDwon() 倒计时计时器器
+ * @param  {String}   format   时间格式
+ * @param  {String}   to       截止时间
+ * @param  {String}   from     开始时间，如果将 from 设置为一个回调函数，则它被
+ *                             应用到 callback 上，callback 则会被引用到 complete
+ *                             上，from 则自动使用当前时间；
+ * @param  {Function} callback 每一次计时执行的回调函数，支持一个参数，即计时器
+ *                             当前的时间文本
+ * @param  {Function} complete 计时器完成后执行的回调函数
+ */
+date.countDwon = function(format, to, from, callback, complete){
+	var date = new Date(),
+		time,
+		days,
+		hours,
+		mins,
+		secs,
+		text;
+	if(typeof from == 'function'){
+		complete = callback;
+		callback = from;
+		from = date.getTime();
+	}else if(typeof from == 'string'){
+		from = Date.parse(from);
+	}
+	if(typeof to == 'string'){
+		to = Date.parse(to);
+	}
+	var countDwon = function(){
+		time = (to - from)/1000;
+		days = Math.floor(time/(24*3600));
+		hours = Math.floor(time%(24*3600)/3600);
+		if(hours < 10) hours = '0'+hours;
+		mins = Math.floor(time%(24*3600)%3600/60);
+		if(mins < 10) mins = '0'+mins;
+		secs = Math.floor(time%(24*3600)%3600%60);
+		if(secs < 10) secs = '0'+secs;
+		if(to <= from){
+			clearInterval(int);
+			if(typeof complete == 'function')
+				complete();
+		}else{
+			to -= 1000;
+		}
+		text = format.replace(/\bd\b/g, days)
+					   .replace(/\bH\b/g, hours)
+					   .replace(/\bi\b/g, mins)
+					   .replace(/\bs\b/g, secs);
+		if(typeof callback == 'function')
+			callback(text);
+	};
+	countDwon();
+	var int = setInterval(countDwon, 1000);
+}
+
+if(typeof module !== 'undefined')
+	module.exports = date; //导出 nodejs 模块
