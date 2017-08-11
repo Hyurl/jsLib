@@ -69,7 +69,7 @@
 			}catch(err){}
 			return value;
 		}
-		if(value instanceof Object)
+		if(value instanceof Object && !(value instanceof Function))
 			value = JSON.stringify(value);
 		hasStorage ? storage.setItem(name, value) : cookie(name, value);
 		return value;
