@@ -61,8 +61,16 @@
 		if(!value && value !== undefined){
 			return hasStorage ? storage.removeItem(name) : cookie(name, false);
 		}else if(value === undefined){
-			return hasStorage ? storage.getItem(name) : cookie(name);
+			var value = hasStorage ? storage.getItem(name) : cookie(name);
+			try{
+				var _value = JSON.parse(value);
+				if(_value instanceof Object && !(_value instanceof Function))
+					value = _value;
+			}catch(err){}
+			return value;
 		}
+		if(value instanceof Object && !(value instanceof Function))
+			value = JSON.stringify(value);
 		hasStorage ? storage.setItem(name, value) : cookie(name, value);
 		return value;
 	};
