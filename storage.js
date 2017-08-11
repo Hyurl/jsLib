@@ -64,12 +64,12 @@
 			var value = hasStorage ? storage.getItem(name) : cookie(name);
 			try{
 				var _value = JSON.parse(value);
-				if(_value instanceof Object && !(_value instanceof Function))
+				if(_value instanceof Object)
 					value = _value;
 			}catch(err){}
 			return value;
 		}
-		if(value instanceof Object && !(value instanceof Function))
+		if(value instanceof Object)
 			value = JSON.stringify(value);
 		hasStorage ? storage.setItem(name, value) : cookie(name, value);
 		return value;
