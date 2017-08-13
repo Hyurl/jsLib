@@ -29,8 +29,7 @@ function cookie(key, value, options){
 				k = decodeURIComponent(_cookie[i].substring(0, pos)), //获取键
 				v = decodeURIComponent(_cookie[i].substring(pos+1)); //获取值
 			try{ //尝试解析 JSON
-				var _v = JSON.parse(v);
-				v = typeof _v !== 'string' ? _v : v;
+				v = JSON.parse(v);
 			}catch(e){}
 			cookie[k] = v;
 		}
@@ -81,8 +80,7 @@ function storage(key, value, local){
 	for(var k in _storage){
 		var v = _storage[k];
 		try{ //尝试解析 JSON
-			var _v = JSON.parse(v);
-			v = typeof _v !== 'string' ? _v : v;
+			v = JSON.parse(v);
 		}catch(e){}
 		storage[k] = v;
 	}
