@@ -1,12 +1,14 @@
 /* 去掉字符串首尾空格的方法 */
-String.prototype.ltrim = function() {
-	return this.replace(/(^\s*)/g, "");  
-}
-String.prototype.rtrim = function() {
-	return this.replace(/(\s*$)/g, "");  
-}
-String.prototype.trim = function() {
-	return this.replace(/(^\s*)|(\s*$)/g, "");  
+if(String.prototype.trim === undefined){
+	String.prototype.trimLeft = function() {
+		return this.replace(/(^\s*)/g, "");  
+	}
+	String.prototype.trimRight = function() {
+		return this.replace(/(\s*$)/g, "");  
+	}
+	String.prototype.trim = function() {
+		return this.replace(/(^\s*)|(\s*$)/g, "");  
+	}
 }
 
 /** parseUrl() 方法将 URL 地址解析为数组 */
