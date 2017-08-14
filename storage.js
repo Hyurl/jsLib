@@ -78,11 +78,13 @@ function storage(key, value, local){
 		storage = Object.create(Storage.prototype, {length: {value: 0, writable: true}}),
 		_storage = local ? localStorage : sessionStorage;
 	for(var k in _storage){
-		var v = _storage[k];
-		try{ //尝试解析 JSON
-			v = JSON.parse(v);
-		}catch(e){}
-		storage[k] = v;
+		if(_storage.hasOwnProperty(k)){
+			var v = _storage[k];
+			try{ //尝试解析 JSON
+				v = JSON.parse(v);
+			}catch(e){}
+			storage[k] = v;
+		}
 	}
 	storage.length = Object.keys(storage).length;
 	if(!key){
