@@ -36,7 +36,7 @@ if (typeof NodeList == 'function' || (typeof NodeList == 'object')) {
         jQuery.fn.delayKeyup = NodeList.prototype.delayKeyup;
     //AMD
     if (typeof define === 'function' && define.amd)
-        define(delayKeyup);
+        define('delayKeyup', [], delayKeyup);
 } else if (typeof module === 'object' && module.exports) {
     //Nodejs/CommonJS
     module.exports = delayKeyup;
