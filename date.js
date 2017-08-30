@@ -149,7 +149,10 @@ date.countDwon = function(format, to, from, callback, complete) {
     var int = setInterval(countDwon, 1000);
 }
 
-if (typeof module === 'object' && module.exports)
+if (typeof module === 'object' && module.exports){
     module.exports = date; //导出 nodejs 模块
-else if (typeof define === 'function' && define.amd)
-    define('date', [], date); //导出 AMD 模块
+}else if (typeof define === 'function'){
+    define((require, exports, module) => {
+        module.exports = date;
+    });
+}
